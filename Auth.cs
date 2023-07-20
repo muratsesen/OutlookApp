@@ -4,10 +4,13 @@ public static class Auth{
     private static SqliteRepository repo = new SqliteRepository(context);
     public static async Task<string> GetAccessTokenAsync()
     {
+        Console.WriteLine("Getting Access Token");
         //Check if there is a token in db
         var token = repo.GetToken();
         if(token == null)
         {
+            Console.WriteLine("No token found in db");
+            Console.WriteLine("Requesting new token");
             token = await TokenHelper.RequestToken();
             if(token != null)
             {
@@ -16,6 +19,8 @@ public static class Auth{
             }
         }
         else if(!token.IsValid()){
+            Console.WriteLine("Token is not valid");
+            Console.WriteLine("Requesting new token");
             var newToken = await TokenHelper.RequestToken();
             if(newToken != null)
             {
@@ -24,6 +29,7 @@ public static class Auth{
             }
         }
         else {
+            Console.WriteLine("Token is valid");
             AccessToken = token.AccessToken;
         }
         

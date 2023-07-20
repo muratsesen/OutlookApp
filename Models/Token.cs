@@ -11,7 +11,7 @@ public class Token
     [JsonPropertyName("access_token")]
     public string AccessToken { get; set; }
 
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; }=DateTime.UtcNow;
     
     public bool IsValid()
     {

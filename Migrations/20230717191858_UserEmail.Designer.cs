@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GraphTutorial.Migrations
 {
     [DbContext(typeof(OutlookContext))]
-    partial class OutlookContextModelSnapshot : ModelSnapshot
+    [Migration("20230717191858_UserEmail")]
+    partial class UserEmail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.8");
@@ -22,102 +25,121 @@ namespace GraphTutorial.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("BccRecipients")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("BodyPreview")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("CcRecipients")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ChangeKey")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ConversationId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ConversationIndex")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("CreatedDateTime")
+                    b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTimeOffset?>("EndDateTime")
+                    b.Property<DateTimeOffset>("EndDateTime")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Flag")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("From")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<bool?>("HasAttachments")
+                    b.Property<bool>("HasAttachments")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Importance")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("InferenceClassification")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("InternetMessageId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<bool?>("IsAllDay")
+                    b.Property<bool>("IsAllDay")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool?>("IsDelegated")
+                    b.Property<bool>("IsDelegated")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool?>("IsDraft")
+                    b.Property<bool>("IsDraft")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool?>("IsOutOfDate")
+                    b.Property<bool>("IsOutOfDate")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool?>("IsRead")
+                    b.Property<bool>("IsRead")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool?>("IsReadReceiptRequested")
+                    b.Property<bool>("IsReadReceiptRequested")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime?>("LastModifiedDateTime")
+                    b.Property<DateTime>("LastModifiedDateTime")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("MeetingMessageType")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("MeetingRequestType")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ParentFolderId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("ReceivedDateTime")
+                    b.Property<DateTime>("ReceivedDateTime")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ReplyTo")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<bool?>("ResponseRequested")
+                    b.Property<bool>("ResponseRequested")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Sender")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("SentDateTime")
+                    b.Property<DateTime>("SentDateTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTimeOffset?>("StartDateTime")
+                    b.Property<DateTimeOffset>("StartDateTime")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Subject")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ToRecipients")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Type")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("UserId")
@@ -125,53 +147,14 @@ namespace GraphTutorial.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("WebLink")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ParentFolderId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Emails");
-                });
-
-            modelBuilder.Entity("Folder", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("ChildFolderCount")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("DisplayName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool?>("IsHidden")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ParentFolderId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("SizeInBytes")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("TotalItemCount")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("UnreadItemCount")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Folders");
                 });
 
             modelBuilder.Entity("Token", b =>
@@ -244,42 +227,18 @@ namespace GraphTutorial.Migrations
 
             modelBuilder.Entity("Email", b =>
                 {
-                    b.HasOne("Folder", "Folder")
-                        .WithMany("Emails")
-                        .HasForeignKey("ParentFolderId");
-
                     b.HasOne("User", "User")
                         .WithMany("Emails")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Folder");
-
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Folder", b =>
-                {
-                    b.HasOne("User", "User")
-                        .WithMany("Folders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Folder", b =>
-                {
-                    b.Navigation("Emails");
                 });
 
             modelBuilder.Entity("User", b =>
                 {
                     b.Navigation("Emails");
-
-                    b.Navigation("Folders");
                 });
 #pragma warning restore 612, 618
         }

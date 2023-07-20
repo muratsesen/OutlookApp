@@ -44,7 +44,7 @@ public class SqliteRepository : IRepository
 
     public void AddToken(Token token)
     {
-        token.CreatedAt = DateTime.Now;
+        token.CreatedAt = DateTime.UtcNow;
         context.Tokens.Add(token);
         context.SaveChanges();
     }
@@ -57,7 +57,41 @@ public class SqliteRepository : IRepository
     public void UpdateToken(Token token)
     {
         var _token = context.Tokens.FirstOrDefault();
+        if(_token != null)
+        {
+
         _token.AccessToken = token.AccessToken;
+        _token.CreatedAt = DateTime.UtcNow;
+        _token.ExpiresIn = token.ExpiresIn;
+        _token.ExtExpiresIn = token.ExtExpiresIn;
+        }
+        else
+        {
+            context.Tokens.Add(token);
+        }
         context.SaveChanges();
     }
+
+    public void SaveUserEmails(List<Email> messages,string userId)
+    {
+        foreach (var message in messages)
+        {
+
+            message.UserId = userId;
+            context.Emails.Add(message);
+        }
+        context.SaveChanges();
+    }
+
+    public void AddUserFolders(List<Folder> folders, string userId)
+    {
+        foreach (var folder in folders)
+        {
+            folder.UserId = userId;            
+            context.Folders.Add(folder);
+        }
+        context.SaveChanges();
+    }
+
 }
+

@@ -29,7 +29,6 @@ public static class TokenHelper
                 {
                     // Read the response content as a string
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine("responseBody: " + responseBody);
 
                     // Deserialize the response JSON
                     var token = JsonSerializer.Deserialize<Token>(responseBody);

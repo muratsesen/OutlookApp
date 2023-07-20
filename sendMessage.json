@@ -1,0 +1,18 @@
+{
+    "message": {
+        "subject": "Test",
+        "body": {
+            "contentType": "Text",
+            "content": "Test"
+        },
+        "toRecipients": [
+            {
+                "emailAddress": {
+                    "name": null,
+                    "address": "sesenmurat@@hotmail.com"
+                }
+            }
+        ]
+    },
+    "saveToSentItems": false
+}

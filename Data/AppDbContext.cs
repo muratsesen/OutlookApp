@@ -6,7 +6,8 @@ public class OutlookContext : DbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Token> Tokens { get; set; }
-
+    public DbSet<Email> Emails { get; set; }
+    public DbSet<Folder> Folders { get; set; }
 
     public string DbPath { get; }
 

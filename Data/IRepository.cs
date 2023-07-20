@@ -1,5 +1,6 @@
 public interface IRepository
 {
+    void AddUserFolders(List<Folder> folders,string userId);
     void AddUser(User user);
     void AddUsers(List<User> userList);
     List<User> GetAllUsers();

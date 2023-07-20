@@ -1,0 +1,121 @@
+19.07.2023 15: 41: 14
+{
+    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('48fe8453-d75e-4839-82f5-7a80bf984b1a')/messages",
+    "value": [
+        {
+            "@odata.etag": "W/\"CQAAABYAAABwoKHBUBf5Tp89QVe/iBX9AAALOym5\"",
+            "id": "AAMkADg4MDZlMWFjLWM0MWEtNDkxOS04NDE4LTA5ZGU3MjQ0ZjZlYQBGAAAAAADwB27-tbzMR4fKxnJNQWu0BwBwoKHBUBf5Tp89QVe-iBX9AAAAAAEMAABwoKHBUBf5Tp89QVe-iBX9AAALQdZCAAA=",
+            "createdDateTime": "2023-07-19T12:24:27Z",
+            "lastModifiedDateTime": "2023-07-19T12:24:29Z",
+            "changeKey": "CQAAABYAAABwoKHBUBf5Tp89QVe/iBX9AAALOym5",
+            "categories": [],
+            "receivedDateTime": "2023-07-19T12:24:27Z",
+            "sentDateTime": "2023-07-19T12:24:24Z",
+            "hasAttachments": false,
+            "internetMessageId": "<PA4P194MB10059CB987B1BFB4B371C52CDE39A@PA4P194MB1005.EURP194.PROD.OUTLOOK.COM>",
+            "subject": "deneme konu 2 ek yok",
+            "bodyPreview": "keyword: nas\u0131ls\u0131n",
+            "importance": "normal",
+            "parentFolderId": "AAMkADg4MDZlMWFjLWM0MWEtNDkxOS04NDE4LTA5ZGU3MjQ0ZjZlYQAuAAAAAADwB27-tbzMR4fKxnJNQWu0AQBwoKHBUBf5Tp89QVe-iBX9AAAAAAEMAAA=",
+            "conversationId": "AAQkADg4MDZlMWFjLWM0MWEtNDkxOS04NDE4LTA5ZGU3MjQ0ZjZlYQAQABNuvIpmifRPqmR5CGSyvXw=",
+            "conversationIndex": "AQHZujv0E268imaJ9E+qZHkIZLK9fA==",
+            "isDeliveryReceiptRequested": null,
+            "isReadReceiptRequested": false,
+            "isRead": false,
+            "isDraft": false,
+            "webLink": "https://outlook.office365.com/owa/?ItemID=AAMkADg4MDZlMWFjLWM0MWEtNDkxOS04NDE4LTA5ZGU3MjQ0ZjZlYQBGAAAAAADwB27%2FtbzMR4fKxnJNQWu0BwBwoKHBUBf5Tp89QVe%2FiBX9AAAAAAEMAABwoKHBUBf5Tp89QVe%2FiBX9AAALQdZCAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+            "inferenceClassification": "focused",
+            "body": {
+                "contentType": "html",
+                "content": "<html><head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><style type=\"text/css\" style=\"display:none\">\r\n<!--\r\np\r\n\t{margin-top:0;\r\n\tmargin-bottom:0}\r\n-->\r\n</style></head><body dir=\"ltr\"><div class=\"elementToProof\" style=\"font-family:Calibri,Helvetica,sans-serif; font-size:12pt; color:rgb(0,0,0)\">keyword: nas\u0131ls\u0131n</div></body></html>"
+            },
+            "sender": {
+                "emailAddress": {
+                    "name": "Murat Sesen",
+                    "address": "Sesenmurat@hotmail.com"
+                }
+            },
+            "from": {
+                "emailAddress": {
+                    "name": "Murat Sesen",
+                    "address": "Sesenmurat@hotmail.com"
+                }
+            },
+            "toRecipients": [
+                {
+                    "emailAddress": {
+                        "name": "Murat Sesen",
+                        "address": "muratsesen@tbj78.onmicrosoft.com"
+                    }
+                }
+            ],
+            "ccRecipients": [],
+            "bccRecipients": [],
+            "replyTo": [],
+            "flag": {
+                "flagStatus": "notFlagged"
+            }
+        },
+        {
+            "@odata.etag": "W/\"CQAAABYAAABwoKHBUBf5Tp89QVe/iBX9AAALOymy\"",
+            "id": "AAMkADg4MDZlMWFjLWM0MWEtNDkxOS04NDE4LTA5ZGU3MjQ0ZjZlYQBGAAAAAADwB27-tbzMR4fKxnJNQWu0BwBwoKHBUBf5Tp89QVe-iBX9AAAAAAEMAABwoKHBUBf5Tp89QVe-iBX9AAALQdZBAAA=",
+            "createdDateTime": "2023-07-19T12:24:00Z",
+            "lastModifiedDateTime": "2023-07-19T12:24:11Z",
+            "changeKey": "CQAAABYAAABwoKHBUBf5Tp89QVe/iBX9AAALOymy",
+            "categories": [],
+            "receivedDateTime": "2023-07-19T12:24:00Z",
+            "sentDateTime": "2023-07-19T12:23:54Z",
+            "hasAttachments": true,
+            "internetMessageId": "<PA4P194MB100565F3BCEEF6EED2CBDB68DE39A@PA4P194MB1005.EURP194.PROD.OUTLOOK.COM>",
+            "subject": "deneme konu ekli",
+            "bodyPreview": "konu i\u00e7erikteki keyword: coco",
+            "importance": "normal",
+            "parentFolderId": "AAMkADg4MDZlMWFjLWM0MWEtNDkxOS04NDE4LTA5ZGU3MjQ0ZjZlYQAuAAAAAADwB27-tbzMR4fKxnJNQWu0AQBwoKHBUBf5Tp89QVe-iBX9AAAAAAEMAAA=",
+            "conversationId": "AAQkADg4MDZlMWFjLWM0MWEtNDkxOS04NDE4LTA5ZGU3MjQ0ZjZlYQAQAPFFppRyq-hMoAUWUHSlXME=",
+            "conversationIndex": "AQHZuju58UWmlHKr+EygBRZQdKVcwQ==",
+            "isDeliveryReceiptRequested": null,
+            "isReadReceiptRequested": false,
+            "isRead": false,
+            "isDraft": false,
+            "webLink": "https://outlook.office365.com/owa/?ItemID=AAMkADg4MDZlMWFjLWM0MWEtNDkxOS04NDE4LTA5ZGU3MjQ0ZjZlYQBGAAAAAADwB27%2FtbzMR4fKxnJNQWu0BwBwoKHBUBf5Tp89QVe%2FiBX9AAAAAAEMAABwoKHBUBf5Tp89QVe%2FiBX9AAALQdZBAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+            "inferenceClassification": "focused",
+            "body": {
+                "contentType": "html",
+                "content": "<html><head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><style type=\"text/css\" style=\"display:none\">\r\n<!--\r\np\r\n\t{margin-top:0;\r\n\tmargin-bottom:0}\r\n-->\r\n</style></head><body dir=\"ltr\"><div class=\"elementToProof\" style=\"font-family:Calibri,Helvetica,sans-serif; font-size:12pt; color:rgb(0,0,0)\">konu i\u00e7erikteki keyword: coco</div></body></html>"
+            },
+            "sender": {
+                "emailAddress": {
+                    "name": "Murat Sesen",
+                    "address": "Sesenmurat@hotmail.com"
+                }
+            },
+            "from": {
+                "emailAddress": {
+                    "name": "Murat Sesen",
+                    "address": "Sesenmurat@hotmail.com"
+                }
+            },
+            "toRecipients": [
+                {
+                    "emailAddress": {
+                        "name": "Murat Sesen",
+                        "address": "muratsesen@tbj78.onmicrosoft.com"
+                    }
+                }
+            ],
+            "ccRecipients": [
+                {
+                    "emailAddress": {
+                        "name": "msesenceng@gmail.com",
+                        "address": "msesenceng@gmail.com"
+                    }
+                }
+            ],
+            "bccRecipients": [],
+            "replyTo": [],
+            "flag": {
+                "flagStatus": "notFlagged"
+            }
+        }
+    ]
+}
