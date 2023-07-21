@@ -285,6 +285,28 @@ class GraphHelper
             }
         }
     }
+     internal static async Task<ApiResponse> UpdateFolderAsync(string folderId,string displayName)
+    {
+        using (HttpClient client = new HttpClient())
+        {
+            try
+            {
+                // Get an access token for the user.
+                var token = await Auth.GetAccessTokenAsync();
+                HttpHelper httpHelper = new HttpHelper(token);
+                var jsonData = "{'displayName':'" + displayName + "'}";
+                var response = await httpHelper.PatchAsync($"users/{userId}/mailFolders/{folderId}", jsonData);
+
+                Console.WriteLine(response);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred: " + ex.Message);
+                return null;
+            }
+        }
+    }
     internal static async Task DeleteMessageAsync(string messageId)
     {
         using (HttpClient client = new HttpClient())

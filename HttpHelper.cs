@@ -47,7 +47,6 @@ public class HttpHelper
             return result.Content.ReadAsStringAsync().Result;
         }
     }
-
     public async Task<string> PostAsync(string apiUrl, string jsonBody)
     {
         using (var httpClient = new HttpClient())
@@ -72,7 +71,7 @@ public class HttpHelper
 }";
                 // Set the base URL of the API
                 httpClient.BaseAddress = new Uri(baseUrl + apiUrl);
-               // httpClient.BaseAddress = new Uri("https://localhost:7243/post");
+                // httpClient.BaseAddress = new Uri("https://localhost:7243/post");
 
                 // Set the authorization header with the Bearer token
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -155,7 +154,6 @@ public class HttpHelper
             }
         }
     }
-    //delete async
     public async Task<string> DeleteAsync(string apiUrl)
     {
         using (var httpClient = new HttpClient())
@@ -192,7 +190,6 @@ public class HttpHelper
             return null;
         }
     }
-    //put async
     public async Task<string> PutAsync(string apiUrl, string jsonBody)
     {
         using (var httpClient = new HttpClient())
@@ -226,6 +223,41 @@ public class HttpHelper
                 Console.WriteLine($"Error making the request: {ex.Message}");
             }
             return null;
+        }
+    }
+    public async Task<ApiResponse> PatchAsync(string apiUrl, string jsonBody)
+    {
+        using (var httpClient = new HttpClient())
+        {
+            try
+            {
+                // Set the base URL of the API
+                httpClient.BaseAddress = new Uri(baseUrl + apiUrl);
+
+                // Set the authorization header with the Bearer token
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                // Set the content type to application/json
+                //httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // Convert the JSON body to a StringContent object
+                var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+                // Send the PUT request and get the response
+                var response = await httpClient.PatchAsync(baseUrl + apiUrl, content);
+
+                // Ensure the request was successful
+                response.EnsureSuccessStatusCode();
+
+                // Read and return the response content as a string
+                return new  ApiResponse { Success = true, Content = await response.Content.ReadAsStringAsync() };
+            }
+            catch (HttpRequestException ex)
+            {
+                // Handle any exceptions that may occur during the request
+                Console.WriteLine($"Error making the request: {ex.Message}");
+                return new  ApiResponse { Success = false, Content = ex.Message};
+            }
         }
     }
 }

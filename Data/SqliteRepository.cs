@@ -6,7 +6,6 @@ public class SqliteRepository : IRepository
         context = _context;
     }
 
-
     public void AddUser(User user)
     {
         using (context)
@@ -36,34 +35,30 @@ public class SqliteRepository : IRepository
             context.SaveChanges();
         }
     }
-
     public List<User> GetAllUsers()
     {
         return context.Users.ToList();
     }
-
     public void AddToken(Token token)
     {
         token.CreatedAt = DateTime.UtcNow;
         context.Tokens.Add(token);
         context.SaveChanges();
     }
-
     public Token GetToken()
     {
         return context.Tokens.FirstOrDefault();
     }
-
     public void UpdateToken(Token token)
     {
         var _token = context.Tokens.FirstOrDefault();
-        if(_token != null)
+        if (_token != null)
         {
 
-        _token.AccessToken = token.AccessToken;
-        _token.CreatedAt = DateTime.UtcNow;
-        _token.ExpiresIn = token.ExpiresIn;
-        _token.ExtExpiresIn = token.ExtExpiresIn;
+            _token.AccessToken = token.AccessToken;
+            _token.CreatedAt = DateTime.UtcNow;
+            _token.ExpiresIn = token.ExpiresIn;
+            _token.ExtExpiresIn = token.ExtExpiresIn;
         }
         else
         {
@@ -71,8 +66,7 @@ public class SqliteRepository : IRepository
         }
         context.SaveChanges();
     }
-
-    public void SaveUserEmails(List<Email> messages,string userId)
+    public void SaveUserEmails(List<Email> messages, string userId)
     {
         foreach (var message in messages)
         {
@@ -82,15 +76,46 @@ public class SqliteRepository : IRepository
         }
         context.SaveChanges();
     }
-
     public void AddUserFolders(List<Folder> folders, string userId)
     {
+        DeleteFolders(userId);
+
         foreach (var folder in folders)
         {
-            folder.UserId = userId;            
+            folder.UserId = userId;
             context.Folders.Add(folder);
         }
         context.SaveChanges();
+    }
+    public void UpdateUserFolders(List<Folder> folders, string userId)
+    {
+        foreach (var folder in folders)
+        {
+            folder.UserId = userId;
+            context.Folders.Add(folder);
+        }
+        context.SaveChanges();
+    }
+    public void DeleteFolders(string userId)
+    {
+        Console.WriteLine("Deleting folders");
+
+        var folders = context.Folders.Where(f => f.UserId == userId).ToList();
+
+        try
+        {
+            //context.Folders.RemoveRange(folders);
+            foreach (var folder in folders)
+            {
+                context.Folders.Remove(folder);
+            }
+            context.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
     }
 
 }

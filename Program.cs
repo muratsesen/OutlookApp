@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using Microsoft.Graph.Models;
 using Azure.Identity;
-// <ProgramSnippet>
+
 Console.WriteLine("Outlook Application\n");
 //
 
@@ -23,138 +23,45 @@ OutlookContext context = new OutlookContext();
 SqliteRepository repository = new SqliteRepository(context);
 
 
-var choice = -1;
-while (choice != 0)
-{
-    Console.WriteLine("Select a user");
-    Console.WriteLine("0 to Exit");
-    Console.WriteLine($"-1 Get Users");
+int i = 1;
+List<User> users = repository.GetAllUsers();
 
-    int i = 1;
-    List<User> users = repository.GetAllUsers();
-    foreach (var item in users)
-    {
-        Console.WriteLine($"{i++} - {item.DisplayName}");
-    }
+var userId = users[2].Id;
+GraphHelper.userId = users[2].Id;
+Console.WriteLine("Selected user id: " + GraphHelper.userId);
 
-    try
-    {
-        choice = 3;//int.Parse(Console.ReadLine() ?? string.Empty);
-        GraphHelper.userId = users[choice - 1].Id;
-        Console.WriteLine("User 1 selected...");
-    }
-    catch (System.FormatException)
-    {
-        // Set to invalid value
-        choice = -1;
-    }
+//Folder
+//await CreateFolderAsync();
+//await DeleteFolderAsync();
+//await GetFoldersAsync(userId);
+//await UpdateFolder(userId);
 
-    if (choice > 0 && choice <= users.Count)
-    {
-        int action = -1;
-        while (action != 0)
-        {
-            Console.WriteLine("-------------- Select an action ---------------");
-            Console.WriteLine("0 to Exit");
-            Console.WriteLine("1 - Get User Messages");
-            Console.WriteLine("2 - *List Outbox");
-            Console.WriteLine("3 - *List Drafts");
-            Console.WriteLine("4 - *List Sent Items");
-            Console.WriteLine("5 - *List Deleted Items");
-            Console.WriteLine("6 - *List Calendar Events");
-            Console.WriteLine("7 - *List Calendar Todos");
-            Console.WriteLine("8 - GetFolders");
-            Console.WriteLine("9 - Get User Messages by date");
-            Console.WriteLine("10 - Get User Messages by date and folder=Inbox");
-            Console.WriteLine("11 - Custom Search");
-            Console.WriteLine("12 - Sent Email");
-            try
-            {
-                action = 12; //int.Parse(Console.ReadLine() ?? string.Empty);
-            }
-            catch (System.FormatException)
-            {
-                // Set to invalid value
-                action = -1;
-            }
+//Get user list
+// var userDtoList = await GraphHelper.GetUsersAsync();
+// repository.AddUsers(UserMapper.MapList(userDtoList));
 
-            await ShowSelectedActionAsync(action, GraphHelper.userId);
 
-            break;
-        }
-    }
-    else
-    {
-        var userDtoList = await GraphHelper.GetUsersAsync();
-        repository.AddUsers(UserMapper.MapList(userDtoList));
-    }
-}
+
 async Task ShowSelectedActionAsync(int action, string userId)
 {
     if (action < 0) return;
-    
-    //await  CreateFolderAsync();
-    //await DeleteFolderAsync();
-    await ListFoldersAsync(userId);
-    //await CreateMessageAsync();
-    //await DeleteMessageAsync();
-    //await MoveMessageAsync();
-    //await CopyMessageAsync();
-    //await ReplyMessageAsync();
-    //await ReplyAllMessageAsync();
-    //await ForwardMessageAsync();
-    //await SendMeetingRequestAsync();
-    //await SendMeetingResponseAsync();
-    //await SendTaskRequestAsync();
-    //await SendTaskResponseAsync();
-    //await SendEmailAsync();
-    //await SendSmsAsync();
-    //await SendAppointmentRequestAsync();
-    //await SendAppointmentResponseAsync();
-    //await SendAppointmentCancellationAsync();
-    //await SendAppointmentUpdateAsync();
-    //await SendAppointmentCancellationUpdateAsync();
-    //await SendAppointmentResponseUpdateAsync();
-    //await SendAppointmentUpdateResponseAsync();
-    //await SendAppointmentCancellationResponseUpdateAsync();
-    //await SendAppointmentResponseCancellationUpdateAsync();
-    //await SendAppointmentUpdateResponseCancellationUpdateAsync();
-    //await SendAppointmentUpdateResponseCancellationResponseUpdateAsync();
-    return;
+
     switch (action)
     {
         case 1:
-            await ListMessagesAsync(userId);
-            break;
-        case 2:
-            await ListOutboxAsync();
-            break;
-        case 3:
-            await ListDraftsAsync();
-            break;
-        case 4:
-            await ListSentItemsAsync();
-            break;
-        case 5:
-            await ListDeletedItemsAsync();
-            break;
-        case 6:
-            await ListCalendarEventsAsync();
-            break;
-        case 7:
-            await ListCalendarTodosAsync();
+            await ListEmailAsync(userId);
             break;
         case 8:
-            await ListFoldersAsync(userId);
+            await GetFoldersAsync(userId);
             break;
         case 9:
-            await ListMessagesByDateAsync(userId);
+            await ListEmailByDateAsync(userId);
             break;
         case 10:
-            await ListMessagesByDateAndFolderAsync(userId);
+            await ListEmailByDateAndFolderAsync(userId);
             break;
         case 11:
-            await ListMessagesByCustomSearchAsync();
+            await ListEmailByCustomSearchAsync();
             break;
         case 12:
             await SendEmailAsync();
@@ -162,48 +69,7 @@ async Task ShowSelectedActionAsync(int action, string userId)
     }
 }
 
-Task ListCalendarTodosAsync()
-{
-    throw new NotImplementedException();
-}
-
-Task ListCalendarEventsAsync()
-{
-    throw new NotImplementedException();
-}
-
-Task ListDeletedItemsAsync()
-{
-    throw new NotImplementedException();
-}
-
-Task ListSentItemsAsync()
-{
-    throw new NotImplementedException();
-}
-
-Task ListDraftsAsync()
-{
-    throw new NotImplementedException();
-}
-
-Task ListOutboxAsync()
-{
-    throw new NotImplementedException();
-}
-async Task ListFoldersAsync(string userId)
-{
-    var folders = await GraphHelper.GetFoldersAsync();
-
-    if (folders != null)
-    {
-        repository.AddUserFolders(FolderMapper.MapList(folders), userId);
-    }
-}
-
-
-// <ListInboxSnippet>
-async Task ListMessagesAsync(string userId)
+async Task ListEmailAsync(string userId)
 {
     try
     {
@@ -232,9 +98,7 @@ async Task ListMessagesAsync(string userId)
         Console.WriteLine($"Error getting user's inbox: {ex.Message}");
     }
 }
-// </ListInboxSnippet>
-
-async Task ListMessagesByDateAsync(string userId)
+async Task ListEmailByDateAsync(string userId)
 {
     try
     {
@@ -266,7 +130,7 @@ async Task ListMessagesByDateAsync(string userId)
         Console.WriteLine($"Error getting user's inbox: {ex.Message}");
     }
 }
-async Task ListMessagesByDateAndFolderAsync(string userId)
+async Task ListEmailByDateAndFolderAsync(string userId)
 {
     try
     {
@@ -298,7 +162,7 @@ async Task ListMessagesByDateAndFolderAsync(string userId)
         Console.WriteLine($"Error getting user's inbox: {ex.Message}");
     }
 }
-async Task ListMessagesByCustomSearchAsync()
+async Task ListEmailByCustomSearchAsync()
 {
     try
     {
@@ -332,9 +196,8 @@ async Task ListMessagesByCustomSearchAsync()
 
     Console.ReadLine();
 }
-
 async Task SendEmailAsync()
-{        
+{
     try
     {
 
@@ -370,8 +233,21 @@ async Task SendEmailAsync()
     }
     Console.ReadLine();
 }
+//Folder Methods
+async Task GetFoldersAsync(string userId)
+{
+    //Folder email foreign key olayını çöz
+    var folders = await GraphHelper.GetFoldersAsync();
+
+    if (folders != null)
+    {
+        Console.WriteLine("Saving Folders...");
+        Console.WriteLine(folders.Count);
+        repository.AddUserFolders(FolderMapper.MapList(folders), userId);
+    }
+}
 async Task CreateFolderAsync()
-{        
+{
     try
     {
 
@@ -385,8 +261,8 @@ async Task CreateFolderAsync()
     }
     Console.ReadLine();
 }
-async Task DeleteFolderAsync( string folderId)
-{        
+async Task DeleteFolderAsync(string folderId)
+{
     try
     {
 
@@ -397,6 +273,27 @@ async Task DeleteFolderAsync( string folderId)
     catch (Exception ex)
     {
         Console.WriteLine($"Error  deleting folder: {ex.Message}");
+    }
+    Console.ReadLine();
+
+}
+async Task UpdateFolder(string userId)
+{
+    try
+    {
+        var testFolderId = "AAMkADg4MDZlMWFjLWM0MWEtNDkxOS04NDE4LTA5ZGU3MjQ0ZjZlYQAuAAAAAADwB27-tbzMR4fKxnJNQWu0AQBwoKHBUBf5Tp89QVe-iBX9AAALQa0tAAA=";
+        var res = await GraphHelper.UpdateFolderAsync(testFolderId, "Deneme Klasör4 ");
+        if(res.Success)
+        Console.WriteLine("Folder updated...");
+        else
+        {
+            Console.WriteLine("Error  updating folder: ");
+            Console.WriteLine(res.Content);
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error  updating folder: {ex.Message}");
     }
     Console.ReadLine();
 
