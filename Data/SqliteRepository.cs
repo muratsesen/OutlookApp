@@ -68,24 +68,63 @@ public class SqliteRepository : IRepository
     }
     public void SaveUserEmails(List<Email> messages, string userId)
     {
-        foreach (var message in messages)
+        try
         {
+            foreach (var message in messages)
+            {
+                Console.WriteLine("------------------------------------");
+                Console.WriteLine("Parent Folder Id: " + message.ParentFolderId);
+                var folder = context.Folders.FirstOrDefault(f => f.Id == message.ParentFolderId);
+                if (folder != null) Console.WriteLine("Folder Name: " + folder.DisplayName);
+                else Console.WriteLine("Foler is null");
 
-            message.UserId = userId;
-            context.Emails.Add(message);
+                Console.WriteLine("------------------------------------");
+                message.UserId = userId;
+                context.Emails.Add(message);
+            }
+            context.SaveChanges();
         }
-        context.SaveChanges();
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error adding emails");
+            Console.WriteLine(ex.Message);
+            Console.WriteLine(ex.InnerException);
+        }
+
     }
     public void AddUserFolders(List<Folder> folders, string userId)
     {
-        DeleteFolders(userId);
-
-        foreach (var folder in folders)
+        try
         {
-            folder.UserId = userId;
-            context.Folders.Add(folder);
+            DeleteFolders(userId);
+            int i = 1;
+            foreach (var folder in folders)
+            {
+                // Console.WriteLine("------------------------------------");
+                // Console.WriteLine("Parent Folder Id: " + folder.ParentFolderId);
+                // var parentFolder = context.Folders.FirstOrDefault(f => f.Id == folder.ParentFolderId);
+                // if (parentFolder != null) Console.WriteLine("Parent Folder Name: " + parentFolder.DisplayName);
+                // else Console.WriteLine("Parent Folder is null");
+
+                Console.WriteLine(i++ + "------------------------------------");
+                Console.WriteLine("Folder Name: " + folder.DisplayName);
+                Console.WriteLine("Folder Id: " + folder.Id);
+                Console.WriteLine("Parent Folder Id: " + folder.ParentFolderId);
+                Console.WriteLine("------------------------------------");
+                Console.WriteLine("User Id: " + userId);
+                Console.WriteLine("------------------------------------");
+
+                folder.UserId = userId;
+                context.Folders.Add(folder);
+            }
+            context.SaveChanges();
         }
-        context.SaveChanges();
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error adding folders");
+            Console.WriteLine(ex.Message);
+        }
+
     }
     public void UpdateUserFolders(List<Folder> folders, string userId)
     {

@@ -16,7 +16,7 @@ public class OutlookContext : DbContext
         var folder = Environment.SpecialFolder.LocalApplicationData;
         var path = Environment.GetFolderPath(folder);
         DbPath = System.IO.Path.Join(path, "outlook2.db");
-        Console.WriteLine($"Outlook DB Path {path}");
+        //Console.WriteLine($"Outlook DB Path {path}");
     }
     // protected override void OnModelCreating(ModelBuilder modelBuilder)
     // {

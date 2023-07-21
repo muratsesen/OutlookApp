@@ -30,17 +30,19 @@ var userId = users[2].Id;
 GraphHelper.userId = users[2].Id;
 Console.WriteLine("Selected user id: " + GraphHelper.userId);
 
+//Get user list
+// var userDtoList = await GraphHelper.GetUsersAsync();
+// repository.AddUsers(UserMapper.MapList(userDtoList));
+
 //Folder
+//await GetFoldersAsync(userId);
 //await CreateFolderAsync();
 //await DeleteFolderAsync();
 //await GetFoldersAsync(userId);
 //await UpdateFolder(userId);
 
-//Get user list
-// var userDtoList = await GraphHelper.GetUsersAsync();
-// repository.AddUsers(UserMapper.MapList(userDtoList));
-
-
+//Email
+await GetEmailAsync(userId);
 
 async Task ShowSelectedActionAsync(int action, string userId)
 {
@@ -49,19 +51,19 @@ async Task ShowSelectedActionAsync(int action, string userId)
     switch (action)
     {
         case 1:
-            await ListEmailAsync(userId);
+            await GetEmailAsync(userId);
             break;
         case 8:
             await GetFoldersAsync(userId);
             break;
         case 9:
-            await ListEmailByDateAsync(userId);
+            await GetEmailByDateAsync(userId);
             break;
         case 10:
-            await ListEmailByDateAndFolderAsync(userId);
+            await GetEmailByDateAndFolderAsync(userId);
             break;
         case 11:
-            await ListEmailByCustomSearchAsync();
+            await GetEmailByCustomSearchAsync();
             break;
         case 12:
             await SendEmailAsync();
@@ -69,7 +71,7 @@ async Task ShowSelectedActionAsync(int action, string userId)
     }
 }
 
-async Task ListEmailAsync(string userId)
+async Task GetEmailAsync(string userId)
 {
     try
     {
@@ -82,13 +84,16 @@ async Task ListEmailAsync(string userId)
             return;
         }
 
-        // int i = 1;
-        // foreach (var message in messages)
-        // {
-        //     Console.WriteLine(i++ + "-" + message.Subject);
-        // }
+        int i = 1;
+        foreach (var message in messages)
+        {
+            Console.WriteLine(i++ + "--------------------------------" );
+            Console.WriteLine("Subject: " + message.Subject);
+            Console.WriteLine("ParentFolderId: " + message.ParentFolderId);
 
-        Console.WriteLine("Saving Messages...");
+        }
+
+        Console.WriteLine("Saving User Messages...");
 
         repository.SaveUserEmails(EmailMapper.MapToEmailList(messages), userId);
 
@@ -98,7 +103,7 @@ async Task ListEmailAsync(string userId)
         Console.WriteLine($"Error getting user's inbox: {ex.Message}");
     }
 }
-async Task ListEmailByDateAsync(string userId)
+async Task GetEmailByDateAsync(string userId)
 {
     try
     {
@@ -130,7 +135,7 @@ async Task ListEmailByDateAsync(string userId)
         Console.WriteLine($"Error getting user's inbox: {ex.Message}");
     }
 }
-async Task ListEmailByDateAndFolderAsync(string userId)
+async Task GetEmailByDateAndFolderAsync(string userId)
 {
     try
     {
@@ -162,7 +167,7 @@ async Task ListEmailByDateAndFolderAsync(string userId)
         Console.WriteLine($"Error getting user's inbox: {ex.Message}");
     }
 }
-async Task ListEmailByCustomSearchAsync()
+async Task GetEmailByCustomSearchAsync()
 {
     try
     {

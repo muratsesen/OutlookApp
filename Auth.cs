@@ -4,6 +4,7 @@ public static class Auth{
     private static SqliteRepository repo = new SqliteRepository(context);
     public static async Task<string> GetAccessTokenAsync()
     {
+        Console.WriteLine("-------------------Token---------------------");
         Console.WriteLine("Getting Access Token");
         //Check if there is a token in db
         var token = repo.GetToken();
@@ -33,7 +34,7 @@ public static class Auth{
             AccessToken = token.AccessToken;
         }
         
-
+        Console.WriteLine("----------------------------------------");
         return AccessToken;
     }
     public static async void RefreshAccessToken()
