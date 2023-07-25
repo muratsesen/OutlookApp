@@ -42,7 +42,8 @@ Console.WriteLine("Selected user id: " + GraphHelper.userId);
 //await UpdateFolder(userId);
 
 //Email
-await GetEmailAsync(userId);
+//await GetEmailAsync(userId);
+await GraphHelper.GetSentMessagesAsync();
 
 async Task ShowSelectedActionAsync(int action, string userId)
 {
@@ -82,15 +83,6 @@ async Task GetEmailAsync(string userId)
         {
             Console.WriteLine("No results returned.");
             return;
-        }
-
-        int i = 1;
-        foreach (var message in messages)
-        {
-            Console.WriteLine(i++ + "--------------------------------" );
-            Console.WriteLine("Subject: " + message.Subject);
-            Console.WriteLine("ParentFolderId: " + message.ParentFolderId);
-
         }
 
         Console.WriteLine("Saving User Messages...");

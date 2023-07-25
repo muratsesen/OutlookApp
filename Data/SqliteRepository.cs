@@ -74,10 +74,23 @@ public class SqliteRepository : IRepository
             {
                 Console.WriteLine("------------------------------------");
                 Console.WriteLine("Parent Folder Id: " + message.ParentFolderId);
+
                 var folder = context.Folders.FirstOrDefault(f => f.Id == message.ParentFolderId);
                 if (folder != null) Console.WriteLine("Folder Name: " + folder.DisplayName);
-                else Console.WriteLine("Foler is null");
+                else
+                {
+                    Console.WriteLine("** Parent Foler is null");
+                    continue;
+                }
 
+                var existingData = context.Emails.FirstOrDefault(m => m.Id == message.Id);
+
+                if (existingData != null)
+                {
+                    Console.WriteLine("Email already exists");
+                    continue;
+                }
+                
                 Console.WriteLine("------------------------------------");
                 message.UserId = userId;
                 context.Emails.Add(message);
@@ -100,11 +113,6 @@ public class SqliteRepository : IRepository
             int i = 1;
             foreach (var folder in folders)
             {
-                // Console.WriteLine("------------------------------------");
-                // Console.WriteLine("Parent Folder Id: " + folder.ParentFolderId);
-                // var parentFolder = context.Folders.FirstOrDefault(f => f.Id == folder.ParentFolderId);
-                // if (parentFolder != null) Console.WriteLine("Parent Folder Name: " + parentFolder.DisplayName);
-                // else Console.WriteLine("Parent Folder is null");
 
                 Console.WriteLine(i++ + "------------------------------------");
                 Console.WriteLine("Folder Name: " + folder.DisplayName);

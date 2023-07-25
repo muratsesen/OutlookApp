@@ -31,7 +31,39 @@ class GraphHelper
             return null;
         }
     }
-    internal static async Task<List<CustomMessage>> GetMessagesAsync( DateTime startDate, DateTime endDate)
+    internal static async Task<List<CustomMessage>> GetSentMessagesAsync()
+    {
+        using (HttpClient client = new HttpClient())
+        {
+            try
+            {
+                // Get an access token for the user.
+                var token = await Auth.GetAccessTokenAsync();
+                HttpHelper httpHelper = new HttpHelper(token);
+
+                var response = await httpHelper.GetAsync($"users/{userId}/mailFolders('SentItems')/messages?$select=sender,subject");
+
+                var messageResponse = JsonSerializer.Deserialize<MessageResponse>(response);
+
+                if (messageResponse != null)
+                {
+                    foreach (var message in messageResponse.Value)
+                    {
+                        Console.WriteLine($"{message.Sender.EmailAddress.Address} - {message.Subject}");
+                    }
+                    return messageResponse.Value;
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred: " + ex.Message);
+            }
+            return null;
+        }
+    }
+    internal static async Task<List<CustomMessage>> GetMessagesAsync(DateTime startDate, DateTime endDate)
     {
         string endDateString = endDate.ToString("yyyy-MM-ddTHH:mm:ssZ");
         string startDateString = startDate.ToString("yyyy-MM-ddTHH:mm:ssZ");
@@ -64,12 +96,12 @@ class GraphHelper
             return null;
         }
     }
-    internal static async Task<List<CustomMessage>> GetMessagesAsync( DateTime? startDate, DateTime? endDate, string folderId)
+    internal static async Task<List<CustomMessage>> GetMessagesAsync(DateTime? startDate, DateTime? endDate, string folderId)
     {
 
         string filter = "";
 
-        if(folderId != null)
+        if (folderId != null)
         {
             filter = $"parentFolderId eq '{folderId}'";
         }
@@ -106,16 +138,16 @@ class GraphHelper
             return null;
         }
     }
-    internal static async Task<List<CustomMessage>> GetMessagesAsync( string folderId=null, string from=null, string? toRecipients=null, string? ccRecipients=null, string? subject=null, string? keyword=null, DateTime? startDate=null, DateTime? endDate=null, bool? hasAttachment=false)
+    internal static async Task<List<CustomMessage>> GetMessagesAsync(string folderId = null, string from = null, string? toRecipients = null, string? ccRecipients = null, string? subject = null, string? keyword = null, DateTime? startDate = null, DateTime? endDate = null, bool? hasAttachment = false)
     {
 
         string filter = "";
 
-        if(folderId != null)
+        if (folderId != null)
         {
             filter = $"parentFolderId eq '{folderId}'";
         }
-        if(from != null)
+        if (from != null)
         {
             var and = filter.Length > 0 ? " and " : "";
             filter += $"{and}from/emailAddress/address eq '{from}'";
@@ -151,8 +183,8 @@ class GraphHelper
         {
             var and = filter.Length > 0 ? " and " : "";
             filter += $"{and}attachments/any()";
-        } 
-        
+        }
+
 
         using (HttpClient client = new HttpClient())
         {
@@ -221,8 +253,8 @@ class GraphHelper
 
                 var data = JsonSerializer.Serialize(sendMessageDto);
                 Console.WriteLine(data);
-                
-                var response = await httpHelper.PostAsync($"users/{userId}/sendMail",data);
+
+                var response = await httpHelper.PostAsync($"users/{userId}/sendMail", data);
                 //var response = await httpHelper.PostAsync($"users/{userId}/sendMail",data);
                 Console.WriteLine(response);
 
@@ -263,8 +295,7 @@ class GraphHelper
             return null;
         }
     }
-    //TODO
-     internal static async Task DeleteFolderAsync(string folderId)
+    internal static async Task DeleteFolderAsync(string folderId)
     {
         using (HttpClient client = new HttpClient())
         {
@@ -285,7 +316,7 @@ class GraphHelper
             }
         }
     }
-     internal static async Task<ApiResponse> UpdateFolderAsync(string folderId,string displayName)
+    internal static async Task<ApiResponse> UpdateFolderAsync(string folderId, string displayName)
     {
         using (HttpClient client = new HttpClient())
         {
@@ -340,15 +371,15 @@ class GraphHelper
 
                 var request = new DeleteMessagesRequest();
 
-                int i =1;
+                int i = 1;
                 foreach (var messageId in messageIds)
                 {
-                    request.Requests.Add(new Request() { Id = i++, Method = "DELETE",Url= $"users/{userId}/messages/{messageId}" });
+                    request.Requests.Add(new Request() { Id = i++, Method = "DELETE", Url = $"users/{userId}/messages/{messageId}" });
                 }
 
                 var data = JsonSerializer.Serialize(request);
 
-                var response = await httpHelper.PostAsync($"https://graph.microsoft.com/v1.0/","$batch", data);
+                var response = await httpHelper.PostAsync($"https://graph.microsoft.com/v1.0/", "$batch", data);
 
                 Console.WriteLine(response);
 
@@ -358,7 +389,7 @@ class GraphHelper
                 Console.WriteLine("An error occurred: " + ex.Message);
             }
         }
-    } 
+    }
     internal static async Task CreateFoldersAsync(string folderName)
     {
         using (HttpClient client = new HttpClient())
@@ -369,9 +400,9 @@ class GraphHelper
                 var token = await Auth.GetAccessTokenAsync();
                 HttpHelper httpHelper = new HttpHelper(token);
 
-                       var jsonData = @"{'displayName': '" + folderName + "'}";
+                var jsonData = @"{'displayName': '" + folderName + "'}";
 
-                var response = await httpHelper.PostAsync($"users/{userId}/mailFolders",jsonData);
+                var response = await httpHelper.PostAsync($"users/{userId}/mailFolders", jsonData);
 
                 Console.WriteLine(response);
 
@@ -381,7 +412,7 @@ class GraphHelper
                 Console.WriteLine("An error occurred: " + ex.Message);
             }
         }
-    
+
     }
     internal static async Task MoveMessagesToSpamFolderAsync()
     {
@@ -393,7 +424,7 @@ class GraphHelper
                 var token = await Auth.GetAccessTokenAsync();
                 HttpHelper httpHelper = new HttpHelper(token);
 
-                var response = await httpHelper.PostAsync($"users/{userId}/messages/moveToSpam","");
+                var response = await httpHelper.PostAsync($"users/{userId}/messages/moveToSpam", "");
 
                 Console.WriteLine(response);
 
@@ -414,7 +445,7 @@ class GraphHelper
                 var token = await Auth.GetAccessTokenAsync();
                 HttpHelper httpHelper = new HttpHelper(token);
 
-                var response = await httpHelper.PostAsync($"users/{userId}/messages/moveToTrash","");
+                var response = await httpHelper.PostAsync($"users/{userId}/messages/moveToTrash", "");
 
                 Console.WriteLine(response);
 
@@ -435,7 +466,7 @@ class GraphHelper
                 var token = await Auth.GetAccessTokenAsync();
                 HttpHelper httpHelper = new HttpHelper(token);
 
-                var response = await httpHelper.PostAsync($"users/{userId}/messages/moveToFolder","");
+                var response = await httpHelper.PostAsync($"users/{userId}/messages/moveToFolder", "");
 
                 Console.WriteLine(response);
 
@@ -446,7 +477,6 @@ class GraphHelper
             }
         }
     }
-    //tag message
     internal static async Task TagMessageAsync()
     {
         using (HttpClient client = new HttpClient())
@@ -457,7 +487,7 @@ class GraphHelper
                 var token = await Auth.GetAccessTokenAsync();
                 HttpHelper httpHelper = new HttpHelper(token);
 
-                var response = await httpHelper.PostAsync($"users/{userId}/messages/tag","");
+                var response = await httpHelper.PostAsync($"users/{userId}/messages/tag", "");
 
                 Console.WriteLine(response);
 

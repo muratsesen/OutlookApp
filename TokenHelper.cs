@@ -10,9 +10,9 @@ public static class TokenHelper
                 // Prepare the request data
                 var requestData = new FormUrlEncodedContent(new[]
                 {
-                    new KeyValuePair<string, string>("client_id", "feffd4f2-d721-4a5f-9c11-2739c8411d94"),
+                    new KeyValuePair<string, string>("client_id", "27fbac7c-66a3-41ab-a003-3a63714d0721"),
                     new KeyValuePair<string, string>("scope", "https://graph.microsoft.com/.default"),
-                    new KeyValuePair<string, string>("client_secret", "p_98Q~sf-gvt2oEEGGgR~cKXOIr.3QaEbgDHbdnN"),
+                    new KeyValuePair<string, string>("client_secret", "VmF8Q~hquYptDjteXCgv1YuI6RV_lJqRFL6Ypc1R"),
                     new KeyValuePair<string, string>("grant_type", "client_credentials")
                 });
 
